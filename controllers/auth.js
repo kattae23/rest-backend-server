@@ -21,7 +21,7 @@ const login = async (req = request, res = response) => {
         }
 
         // Si el usuario está activo
-        if (user.state === false) {
+        if (user.status === false) {
             return res.status(400).json({
                 msg: 'Your account has been block'
             })
@@ -77,7 +77,7 @@ const googleSignIn = async (req = request, res = response) => {
         }
 
         // Si el usuario en base de datos
-        if (!user.state) {
+        if (!user.status) {
             return res.status(401).json({
                 msg: 'Talk with the administrator - user block'
             });

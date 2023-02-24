@@ -4,7 +4,7 @@ const User = require('../models/user')
 
 const validateJWT = async( req = request, res = response, next ) => {
 
-    const token = req.header('x-token')
+    const token = req.header('x-token');
 
     if ( !token ) {
         return res.status(401).json({
@@ -25,7 +25,7 @@ const validateJWT = async( req = request, res = response, next ) => {
         }
 
         // Verificar si el uid tiene estado en true
-        if ( !user.state) {
+        if ( !user.status) {
             return res.status(401).json({
                 msg: 'Invalid token - user Block'
             })

@@ -10,7 +10,7 @@ const createJWT = async (uid = '') => {
         const payload = { uid }
 
         jwt.sign(payload, public_key, {
-            expiresIn: '4h'
+            expiresIn: '30h'
         }, (err, token) => {
             
             if (err) {

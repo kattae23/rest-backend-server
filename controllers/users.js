@@ -9,7 +9,7 @@ const usersGet = async (req = request, res = response) => {
 
     // const { q, nombre = 'no name', apikey, page = 1, limit } = req.query;
     const { limit = 5, from = 0 } = req.query;
-    const query = { state: true }
+    const query = { status: true }
 
     // const users = await User.find(query)
     //     .skip(Number(from))
@@ -75,7 +75,7 @@ const usersDelete = async (req, res) => {
     //Fisicamente lo borramos
     // const user = await User.findByIdAndDelete( id );
 
-    const user = await User.findByIdAndUpdate(id, { state: false });
+    const user = await User.findByIdAndUpdate(id, { status: false });
 
     res.json(user);
 }
