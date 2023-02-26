@@ -99,13 +99,24 @@ const googleSignIn = async (req = request, res = response) => {
             msg: "The token can't not be verified"
         })
     }
+}
 
+const renewToken = async (req, res = response) => {
 
+    const { user } = req
 
+    // generar nuevo JWT y retornarlo en esta petición
+    const token = await createJWT(user.id)
+
+    res.json({
+        user,
+        token
+    })
 }
 
 
 module.exports = {
     googleSignIn,
-    login
+    login,
+    renewToken,
 }

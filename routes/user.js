@@ -13,8 +13,8 @@ router.get('/', usersGet);
 router.put('/:id', [
     check('id', 'Is not a valid id').isMongoId(),
     check('id').custom( userExistById ),
+    check('email').custom(emailExist),
     check('role').custom(isRoleValid),
-    validateFields
 ], usersPut);
 
 router.post('/', [

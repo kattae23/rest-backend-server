@@ -34,7 +34,7 @@ const usersGet = async (req = request, res = response) => {
 const usersPut = async (req, res = response) => {
 
     const { id } = req.params;
-    const { _id, password, google, email, ...rest } = req.body;
+    const { _id, password, google, ...rest } = req.body;
 
     // TODO Validar contra base de datos
     if (password) {
@@ -43,7 +43,7 @@ const usersPut = async (req, res = response) => {
         rest.password = bcryptjs.hashSync(password, salt);
     }
 
-    const user = await User.findByIdAndUpdate(id, rest)
+    const user = await User.findByIdAndUpdate(id, rest, { new: true })
 
     res.json(user);
 }

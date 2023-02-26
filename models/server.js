@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const fileUpload = require('express-fileupload')
 
 class Server {
 
@@ -14,6 +15,7 @@ class Server {
             products: '/api/products',
             search: '/api/search',
             users: '/api/users',
+            uploads: '/api/uploads',
         }
 
         // Conectar a base de datos
@@ -34,24 +36,33 @@ class Server {
     middlewares() {
 
         // CORS
-        this.app.use( cors() );
+        this.app.use(cors());
 
         // Lectura y parseo del body
-        this.app.use( express.json() )
-        
+        this.app.use(express.json())
+
 
         // Directorio Público
         this.app.use(express.static('public'));
 
+        // FileUpload o la carga de archivos
+        this.app.use(fileUpload({
+            useTempFiles: true,
+            tempFileDir: '/tmp/',
+            createParentPath: true,
+        }));
+
+
     }
 
     routes() {
-        
-        this.app.use( this.paths.auth , require('../routes/auth'))
-        this.app.use( this.paths.category , require('../routes/category'))
-        this.app.use( this.paths.products , require('../routes/products'))
-        this.app.use( this.paths.search , require('../routes/search'))
-        this.app.use( this.paths.users , require('../routes/user'))
+
+        this.app.use(this.paths.auth, require('../routes/auth'))
+        this.app.use(this.paths.category, require('../routes/category'))
+        this.app.use(this.paths.products, require('../routes/products'))
+        this.app.use(this.paths.search, require('../routes/search'))
+        this.app.use(this.paths.uploads, require('../routes/uploads'))
+        this.app.use(this.paths.users, require('../routes/user'))
 
     }
 

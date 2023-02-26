@@ -14,16 +14,15 @@ const searchUsers = async (term = '', res = response) => {
 
     const isMongoId = ObjectId.isValid(term);
 
+
     if (isMongoId) {
         const user = await User.findById(term);
-        res.json({
+        return res.json({
             results: (user) ? [user] : []
         });
     }
 
     const regex = new RegExp(term, 'i'); // expresión regular mayusculas y minusculas
-
-
     const users = await User.find({
         $or: [{ firstName: regex }, { lastName: regex }, { email: regex }],
         $and: [{ status: true }]
@@ -44,7 +43,7 @@ const searchCategory = async (term = '', res = response) => {
 
     if (isMongoId) {
         const category = await Category.findById(term);
-        res.json({
+        return res.json({
             results: (category) ? [category] : []
         });
     }
@@ -68,7 +67,7 @@ const searchProducts = async (term = '', res = response) => {
     if (isMongoId) {
         const product = await Product.findById(term)
             .populate('category', 'name');
-        res.json({
+        return res.json({
             results: (product) ? [product] : []
         });
     }
